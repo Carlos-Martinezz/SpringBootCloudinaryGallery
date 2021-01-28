@@ -15,11 +15,13 @@ public class Imagen {
 	private String nombre;
 	private String imagenUrl;
 	private String imagenId;
+	private Long idUsuario;
 
-	public Imagen(String nombre, String imagenUrl, String imagenId) {
+	public Imagen(String nombre, String imagenUrl, String imagenId, Long idUsuario) {
 		this.nombre = nombre;
 		this.imagenUrl = imagenUrl;
 		this.imagenId = imagenId;
+		this.idUsuario = idUsuario;
 	}
 
 	public Imagen() {
@@ -58,4 +60,12 @@ public class Imagen {
 		this.imagenId = imagenId;
 	}
 
+	public Long getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+	
 }

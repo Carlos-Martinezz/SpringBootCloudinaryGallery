@@ -39,41 +39,49 @@ public class MainController {
 	@GetMapping("/list")
 	public ResponseEntity<List<Imagen>> list() {
 		List<Imagen> list = imagenService.list();
-		return new ResponseEntity(list, HttpStatus.OK);
+		return new ResponseEntity<List<Imagen>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/myList/{idUsuario}")
+	public ResponseEntity<List<Imagen>> myList(@PathVariable Long idUsuario) {
+		List<Imagen> list = imagenService.myList(idUsuario);
+		return new ResponseEntity<List<Imagen>>(list, HttpStatus.OK);
 	}
 	
 	@PostMapping("/upload")
-	public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile) throws IOException {
+	public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile, @RequestParam Long idUsuario) throws IOException {
 		
 		BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
 		
 		if(bi == null) {
-			return new ResponseEntity(new Mensaje("Imagen no valida"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>(new Mensaje("Imagen no valida"), HttpStatus.BAD_REQUEST);
 		}
 		
 		Map result = cloudinaryService.upload(multipartFile);
 		Imagen imagen = new Imagen(
 									(String) result.get("original_filename"), 
 									(String) result.get("url"), 
-									(String) result.get("public_id")
+									(String) result.get("public_id"),
+									idUsuario
 								  );
+		
 		imagenService.save(imagen);
 		
-		return new ResponseEntity(new Mensaje("Imagen subida"), HttpStatus.OK);
+		return new ResponseEntity<Object>(new Mensaje("Imagen subida"), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") int id) throws IOException {
 		
 		if(!imagenService.exists(id)) 
-			return new ResponseEntity(new Mensaje("No existe la imagen"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>(new Mensaje("No existe la imagen"), HttpStatus.NOT_FOUND);
 		
 		Imagen imagen = imagenService.getOne(id).get();
 		
 		Map result = cloudinaryService.delete(imagen.getImagenId());
 		imagenService.delete(id);
 		
-		return new ResponseEntity(new Mensaje("Imagen eliminada"), HttpStatus.OK);
+		return new ResponseEntity<Object>(new Mensaje("Imagen eliminada"), HttpStatus.OK);
 	}
 
 }

@@ -16,10 +16,14 @@ import com.carlos.app.repository.ImagenRepository;
 public class ImagenService {
 	
 	@Autowired
-	ImagenRepository imagenRepository;
+	private ImagenRepository imagenRepository;
 	
 	public List<Imagen> list() {
 		return imagenRepository.findByOrderById();
+	}
+	
+	public List<Imagen> myList(Long idUsuario) {
+		return imagenRepository.findByIdUsuario(idUsuario);
 	}
 	
 	public Optional<Imagen> getOne(int id) {
