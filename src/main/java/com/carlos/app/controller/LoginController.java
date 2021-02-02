@@ -53,7 +53,6 @@ public class LoginController {
 		
 		if(nuevoUsuario == null) {
 			
-			
 			String passEncode = passwordEncoder.encode(usuario.getContrasena());
 			
 			usuario.setContrasena("");
