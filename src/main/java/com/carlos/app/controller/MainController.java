@@ -27,7 +27,7 @@ import com.carlos.app.service.ImagenService;
 
 @RestController
 @RequestMapping("/cloudinary")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class MainController {
 	
 	@Autowired

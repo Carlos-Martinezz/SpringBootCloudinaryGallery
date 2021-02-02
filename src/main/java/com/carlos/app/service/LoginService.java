@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,11 +72,13 @@ public class LoginService {
 	
 	@Transactional( readOnly = true )
 	public Usuario findUsuario(Usuario usuario) {
-		return loginRepository.findById(usuario.getId()).get();
+		System.out.println("Buscar usuario: " + usuario.getContrasena());
+		return loginRepository.findUsuarioByNombreAndContrasena(usuario.getNombre(), usuario.getContrasena());
 	}
 	
 	@Transactional
 	public Usuario save(Usuario usuario) {
+		System.out.println("Crear usuario: " + usuario.getContrasena());
 		return loginRepository.save(usuario);
 	}
 	
