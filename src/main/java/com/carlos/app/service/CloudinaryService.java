@@ -21,9 +21,10 @@ public class CloudinaryService {
 
 	public CloudinaryService() {
 		
-		valuesMap.put("cloud_name", "djqwjkrtr");
-		valuesMap.put("api_key", "361657578248397");
-		valuesMap.put("api_secret", "4PMO_tt1AFyIAOqmSJYGCwuHnp0");
+		/*Credenciales de Cloudinary*/
+		valuesMap.put("cloud_name", "");
+		valuesMap.put("api_key", "");
+		valuesMap.put("api_secret", "");
 		
 		cloudinary = new Cloudinary(valuesMap);
 	}
